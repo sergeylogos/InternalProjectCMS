@@ -25,15 +25,18 @@ public class RouteController {
 
     @GetMapping("/")
     public String starter(Model model) {
-        model.addAttribute("title", "start page");
-        model.addAttribute("msg", "выбери что делать?");
+
+        model.addAttribute("clients", clientService.findAll());
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("groups", groupService.findAll());
+        model.addAttribute("applications", applicationService.findAll());
 
         return "index";
     }
 
     @GetMapping("/adminPage")
     public String adminPage(Model model) {
-        model.addAttribute("courses", courseService.findAll());
+
         model.addAttribute("clients", clientService.findAll());
         model.addAttribute("courses", courseService.findAll());
         model.addAttribute("groups", groupService.findAll());
@@ -42,24 +45,36 @@ public class RouteController {
 
     @GetMapping("/showAllApplications")
     public String showAllApplications(Model model) {
+        model.addAttribute("clients", clientService.findAll());
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("groups", groupService.findAll());
         model.addAttribute("applications", applicationService.findAll());
         return "showAllApplicationsPage";
     }
 
     @GetMapping("/showAllClients")
     public String showAllClients(Model model) {
+
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("groups", groupService.findAll());
         model.addAttribute("clients", clientService.findAll());
         return "showAllClientsPage";
     }
 
     @GetMapping("/showAllCourses")
     public String showAllCourses(Model model) {
+
+        model.addAttribute("clients", clientService.findAll());
         model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("groups", groupService.findAll());
         return "showAllCoursesPage";
     }
 
     @GetMapping("/showAllGroups")
-    public String showAllGroups(Model model){
+    public String showAllGroups(Model model) {
+
+        model.addAttribute("courses", courseService.findAll());
+        model.addAttribute("clients", clientService.findAll());
         model.addAttribute("groups", groupService.findAll());
         return "showAllGroupsPage";
     }

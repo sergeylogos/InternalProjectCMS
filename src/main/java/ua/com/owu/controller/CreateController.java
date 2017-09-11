@@ -53,9 +53,9 @@ public class CreateController {
             @RequestParam String city,
             @RequestParam String commentAboutClient,
             @RequestParam String tagsAboutClient,
-            @RequestParam String recomendation
+            @RequestParam String recommendation
     ) {
-        System.out.println(recomendation);
+        System.out.println(recommendation);
 
         Client client = Client.builder()
                 .name(name)
@@ -65,8 +65,12 @@ public class CreateController {
                 .city(city)
                 .commentAboutClient(commentAboutClient)
                 .tagsAboutClient(new Helper().tagsFormater(tagsAboutClient))
-                .recomendation(clientService.findOne(recomendation))
                 .build();
+
+        if (!recommendation.equals("empty")) {
+            client.builder().recomendation(clientService.findOne(recommendation));
+
+        }
 
         clientService.save(client);
         return "redirect:/adminPage";
@@ -133,5 +137,82 @@ public class CreateController {
         groupService.save(grp);
 
         return "redirect:/adminPage";
+    }
+
+
+    @PostMapping("/saveApplicationWithNonExistClient")
+    public String saveApplicationWithNonExistClient(
+            @RequestParam String clientName,
+            @RequestParam String clientSurname,
+            @RequestParam String clientPhone,
+            @RequestParam String clientEmail,
+            @RequestParam String clientCity,
+            @RequestParam String clientOurComment,
+            @RequestParam String clientTagsAboutClient,
+            @RequestParam String clientRecomendation,
+
+            @RequestParam String appDateRecive,
+            @RequestParam String appSource,
+            @RequestParam String appCommentFromClient,
+            @RequestParam String appOurComment,
+            @RequestParam String appTags,
+            @RequestParam String appFutureCourse,
+            @RequestParam Integer appDiscount,
+            @RequestParam String appCloseDate,
+
+
+            @RequestParam String courseSelect,
+
+            @RequestParam String groupSelect
+
+
+    ) throws ParseException {
+
+        Helper helper = new Helper();
+
+        Client client = Client.builder()
+                .name(clientName)
+                .surname(clientSurname)
+                .phoneNumber(clientPhone)
+                .email(clientEmail)
+                .city(clientCity)
+                .commentAboutClient(clientOurComment)
+                .tagsAboutClient(helper.tagsFormater(clientTagsAboutClient))
+                .build();
+        if (!clientRecomendation.equals("empty")) {
+            client.builder().recomendation(clientService.findOne(clientRecomendation));
+
+        }
+        clientService.save(client);
+        System.out.println("Client now is - " + client);
+
+
+        Course course = courseService.findOne(courseSelect);
+        System.out.println(appDiscount);
+        if (appDiscount == 0 || appDiscount == null) appDiscount = 0;
+        System.out.println(appDiscount);
+
+        Application application = Application.builder()
+                .appReciveDate(helper.dateFormater(appDateRecive))
+                .source(appSource)
+                .commnetFromClient(appCommentFromClient)
+                .commentFromManager(appOurComment)
+                .tagsAboutApplication(helper.tagsFormater(appTags))
+                .futureCourse(!appFutureCourse.equals("empty") ? appFutureCourse : "n/a")
+                .discount(appDiscount)
+                .priceWithDiscount(helper.priceCounter(course.getFullPrice(), appDiscount))
+                .client(client)
+                .course(course)
+                .appCloseDate(appCloseDate.substring(0, 25))
+
+                .build();
+
+        applicationService.save(application);
+
+        Group group = groupService.findOne(groupSelect);
+        group.getClients().add(client);
+        groupService.save(group);
+
+        return "redirect:/";
     }
 }

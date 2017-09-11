@@ -20,7 +20,7 @@
     <label for="">теги<input type="text" name="tagsAboutClient" placeholder="tagsAboutClient"></label><br>
 <#--<label for=""><input type="text" id="recomendation" placeholder="рекомендация"></label>-->
     <label for="">рекомендации
-        <select name="recomendation" id="" class="js-example-basic-single" placeholder="рекомендации">
+        <select name="recommendation" id="" class="js-example-basic-single" placeholder="рекомендации">
         <#list clients as client>
             <option value="${client.id}">${client.name} ${client.surname} ${client.phoneNumber}</option>
         </#list>
@@ -43,14 +43,16 @@
                                         placeholder="commentFromManager"></label><br>
     <label for="">теги<input type="text" name="tagsAboutApplication" placeholder="tagsAboutApplication "></label><br>
     <label for="">будующий курс<input type="text" name="futureCourse" placeholder="futureCourse"></label><br>
+<#if clients?? >
     <label for=""> клиент
         <select name="client" id="">
-        <#list clients as client>
-            <option value="${client.id}">${client.name} ${client.surname} </option>
-        </#list>
+            <#list clients as client>
+                <option value="${client.id}">${client.name} ${client.surname} </option>
+            </#list>
         </select>
 
-    </label><br>
+    </label>
+</#if>><br>
     <label for=""> курс
         <select name="course" id="">
         <#list courses as course>
@@ -96,8 +98,8 @@
         <select name="group" id="group">
         <#list groups as group>
             <option value="${group.id}">
-            ${group.course.courseTitle} ***
-            ${group.groupIdentifier} ***
+            ${group.course.courseTitle}
+            ${group.groupIdentifier}
             ${group.startDate?datetime?string("yyyy-MM-dd HH:mm")}
             </option>
         </#list>
@@ -119,9 +121,8 @@
 </form>
 
 
-
+<#--<script src="/script/recomendationAjaxSearch.js"></script>-->
 <script src="/script/spyScript.js"></script>
-<script src="/script/recomendationAjaxSearch.js"></script>
 <script src="/script/select2.js"></script>
 </body>
 </html>

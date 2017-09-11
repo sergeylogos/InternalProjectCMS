@@ -30,6 +30,7 @@ public class Helper {
     }
 
     public Double priceCounter(Integer fullPrice, Integer discount) {
-        return (double) fullPrice - ((double) fullPrice / 100 * (double) discount);
+        if (discount == 0) return (double) fullPrice;
+        else return (double) fullPrice - ((double) fullPrice / 100 * (double) discount);
     }
 }

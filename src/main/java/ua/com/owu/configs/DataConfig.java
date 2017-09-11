@@ -7,6 +7,8 @@ import org.mongodb.morphia.Morphia;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+
 //@Configuration
 //public class DataConfig extends AbstractMongoConfiguration {
 //
@@ -57,10 +59,10 @@ public class DataConfig {
         return morphia().createDatastore(mongoClient(), getDatabaseName());
     }
 
-//    @PostConstruct
-//    public void clear() {
-//        mongoClient().getDatabase("cms").drop();
-//    }
+    @PostConstruct
+    public void clear() {
+        mongoClient().getDatabase("cms").drop();
+    }
 
 
 }

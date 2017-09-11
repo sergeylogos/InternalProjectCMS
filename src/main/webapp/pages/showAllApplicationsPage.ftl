@@ -1,7 +1,48 @@
 <#include "templates/header.ftl">
+
+<h2>создание заявки</h2>
+<form action="/createApplication" method="post">
+
+    <label for="">время подачи заявки<input type="datetime-local" name="appReciveDate"
+                                            placeholder="appReciveDate"></label>
+    <label for="">откуда узнал<input type="text" name="source" placeholder="source"></label>
+    <label for="">коммент от клиента<input type="text" name="commnetFromClient" placeholder="commnetFromClient"></label>
+    <label for="">наш комментарий<input type="text" name="commentFromManager"
+                                        placeholder="commentFromManager"></label>
+    <label for="">теги<input type="text" name="tagsAboutApplication" placeholder="tagsAboutApplication "></label>
+    <label for="">будующий курс<input type="text" name="futureCourse" placeholder="futureCourse"></label>
+<#if clients?? >
+    <label for=""> клиент
+        <select name="client" id="">
+            <#list clients as client>
+                <option value="${client.id}">${client.name} ${client.surname} </option>
+            </#list>
+        </select>
+
+    </label>
+</#if>
+<#if courses??>
+    <label for=""> курс
+        <select name="course" id="">
+            <#list courses as course>
+                <option value="${course.id}">${course.courseTitle}</option>
+            </#list>
+        </select>
+
+    </label>
+
+</#if>
+    <label for="">скидка
+        <input type="number" min="0" name="discount" placeholder="discount">
+    </label>
+    <input type="hidden" name="appCloseDate" id="closeDate">
+    <input type="submit" name="" placeholder="">
+</form>
 <table class="table table-hover">
     <thead>
     <tr>
+        <td>client</td>
+        <td>course</td>
         <td>дата</td>
         <td>источник</td>
         <td>ком клиента</td>
@@ -11,9 +52,12 @@
         <td>дата создания</td>
 
 
-    </tr></thead>
+    </tr>
+    </thead>
 <#list applications as app>
     <tr>
+        <td>${app.client.name} ${app.client.surname}</td>
+        <td>${app.course.courseTitle}</td>
         <td>${app.appReciveDate?datetime}</td>
         <td>${app.source}</td>
         <td>${app.commnetFromClient}</td>
@@ -33,6 +77,10 @@
 </#list>
 
 </table>
+
+<script src="/script/spyScript.js"></script>
+<script src="/script/recomendationAjaxSearch.js"></script>
+<script src="/script/select2.js"></script>
 
 </body>
 </html>

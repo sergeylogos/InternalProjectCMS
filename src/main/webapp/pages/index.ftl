@@ -1,63 +1,66 @@
 <#include "templates/header.ftl">
 
 
-<h1>${msg}</h1>
-<ol>
-    <li><a href="/adminPage">перейти в админку</a></li>
-    <li><a href="/showAllApplications">посмотреть все заявки</a></li>
-    <li><a href="/showAllClients">посмотреть всех клиенты</a></li>
-    <li><a href="/showAllCourses">посмотреть все курсы</a></li>
-</ol>
-<#--<ul>-->
-<#--<li>Добавить-->
-<#--<ul>-->
-<#--<li><a href="/addApp">заявку</a></li>-->
-<#--<li><a href="/addClient">клиента</a></li>-->
-<#--</ul>-->
-<#--</li>-->
-<#--<li>Найти-->
-<#--<ul>-->
-<#--<li><a href="/findApp">заявку</a></li>-->
-<#--<li><a href="/findClient">клиента</a></li>-->
-<#--</ul>-->
-<#--</li>-->
-<#--<li>Найти все-->
-<#--<ul>-->
-<#--<li><a href="/findAllApps">заявки</a></li>-->
-<#--<li><a href="/findAllClients">клиентов</a></li>-->
-<#--</ul>-->
-<#--</li>-->
-<#--<li>Редактировать-->
-<#--<ul>-->
-<#--<li><a href="/editApp">заявку</a></li>-->
-<#--<li><a href="/editClient">клиента</a></li>-->
-<#--</ul>-->
-<#--</li>-->
-<#--<li>Удалить-->
-<#--<ul>-->
-<#--<li><a href="/deleteApp">заявку</a></li>-->
-<#--<li><a href="/deleteClient">клиента</a></li>-->
-<#--</ul>-->
-<#--</li>-->
-<#--</ul>-->
+<#--<h1>${msg}</h1>-->
+<#--<ol>-->
+<#--<li><a href="/adminPage">перейти в админку</a></li>-->
+<#--<li><a href="/showAllApplications">посмотреть все заявки</a></li>-->
+<#--<li><a href="/showAllClients">посмотреть всех клиенты</a></li>-->
+<#--<li><a href="/showAllCourses">посмотреть все курсы</a></li>-->
+<#--</ol>-->
 
-<#--<#list [1,2,3]>-->
-<#--<#items as x>${x} <#sep >/</#items>-->
-<#--</#list>-->
-<#--<form action="">-->
+<form action="/saveApplicationWithNonExistClient" method="post">
+    <input type="" name="clientName" placeholder="clientName" value="vasya">
+    <input type="" name="clientSurname" placeholder="clientSurname" value="pupkin">
+    <input type="" name="clientPhone" placeholder="clientPhone" value="0677894512">
+    <input type="" name="clientEmail" placeholder="clientEmail" value="vasya@vasya.com">
+    <input type="" name="clientCity" placeholder="clientCity" value="lviv">
+    <input type="" name="clientOurComment" placeholder="clientOurComment" value="clientOurComment">
+    <input type="" name="clientTagsAboutClient" placeholder="clientTagsAboutClient" value="clientTagsAboutClient">
 
-<#--<label for="id_label_multiple"> Выбери юзера-->
-<#--<select name="" id="" class="js-example-basic-multiple js-states form-control" multiple="multiple" id="id_label_multiple">-->
-<#--<option value="">asd</option>-->
-<#--<option value="">qwe</option>-->
-<#--<option value="">poi</option>-->
-<#--<option value="">lol</option>-->
-<#--<option value="">asd</option>-->
-<#--</select>-->
-<#--</label>-->
-<#--</form>-->
-<#--<script type="text/javascript">-->
-<#--$(".js-example-basic-multiple").select2();-->
-<#--</script>-->
+    <select name="clientRecomendation" id="" class="js-example-basic-single">
+        <option value="empty">empty</option>
+    <#list clients as client>
+        <option value="${client.id}">${client.name}</option>
+    </#list>
+    </select>
+
+    <hr>
+    <input type="datetime-local" name="appDateRecive" placeholder="appDateRecive">
+    <input type="" name="appSource" placeholder="appSource" value="Facebook">
+    <input type="" name="appCommentFromClient" placeholder="appCommentFromClient" value="appCommentFromClient">
+    <input type="" name="appOurComment" placeholder="appOurComment" value="appOurComment">
+    <input type="" name="appTags" placeholder="appTags" value="appTags">
+
+    <select name="appFutureCourse" id="" class="js-example-basic-single">
+        <option value="empty">empty</option>
+    <#list courses as course >
+        <option value="${course.id}">${course.courseTitle}</option>
+    </#list>
+
+    </select>
+    <hr>
+<#--empty variant!!!!-->
+    <select name="courseSelect" id="" class="js-example-basic-single">
+        <option value="empty">empty</option>
+    <#list courses as course>
+        <option value="${course.id}">${course.courseTitle}</option>
+    </#list>
+
+    </select>
+    <input type="number" name="appDiscount" placeholder="appDiscount" min="0" value="0">
+    <hr>
+    <select name="groupSelect" id="" class="js-example-basic-single">
+    <#list groups as group>
+        <option value="${group.id}">${group.groupIdentifier}</option>
+
+    </#list>
+    </select>
+    <input type="submit" name="" placeholder="">
+    <input type="hidden" id="closeDate" placeholder="closeDate" name="appCloseDate">
+</form>
+
+<script src="/script/spyScript.js"></script>
+<script src="/script/select2.js"></script>
 </body>
 </html>
